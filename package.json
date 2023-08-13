@@ -11,7 +11,7 @@
     "lintfix": "npx eslint . --fix"
   },
   "keywords": [],
-  "author": "andrew",
+  "author": "Andrew",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.46.0",

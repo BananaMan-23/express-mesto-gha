@@ -1,9 +1,16 @@
+const { default: mongoose } = require('mongoose');
+const {
+  Created,
+  CastError,
+  DocumentNotFoundError,
+  ServerError,
+} = require('../utils/constants');
 const User = require('../models/user');
 
 module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ users }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch(() => res.status(ServerError).send({ message: 'Произошла ошибка' }));
 };
 
 module.exports.getUserId = (req, res) => {
@@ -14,9 +21,9 @@ module.exports.getUserId = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        res.status(CastError).send({ message: `Некорректный ID ${req.params.userId}.` });
+        res.status(CastError).send({ message: `Некорректный id ${req.params.userId}.` });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: `Пользователь по ID ${req.params.userId} не найден.` });
+        res.status(DocumentNotFoundError).send({ message: `Пользователь по id ${req.params.userId} не найден.` });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
@@ -26,12 +33,12 @@ module.exports.getUserId = (req, res) => {
 module.exports.addUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(Created).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ message: err.message });
+        res.status(CastError).send({ message: err.message });
       } else {
-        res.status(500).send({ message: 'На сервере произошла ошибка' });
+        res.status(ServerError).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -44,13 +51,12 @@ module.exports.editUserAvatar = (req, res) => {
       if (err instanceof mongoose.Error.ValidationError) {
         res.status(CastError).send({ message: err.message });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Пользователь по ID не найден.' });
+        res.status(DocumentNotFoundError).send({ message: 'Пользователь по id не найден.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
     });
 };
-
 
 module.exports.editUserInfo = (req, res) => {
   const { name, about } = req.body;
@@ -61,9 +67,9 @@ module.exports.editUserInfo = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        res.status(CastError).send({ message: 'Некорректный ID.' });
+        res.status(CastError).send({ message: 'Некорректный id.' });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Пользователь по ID не найден.' });
+        res.status(DocumentNotFoundError).send({ message: 'Пользователь по id не найден.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
