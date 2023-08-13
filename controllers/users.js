@@ -21,9 +21,9 @@ module.exports.getUserId = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        res.status(CastError).send({ message: `Некорректный id ${req.params.userId}.` });
+        res.status(CastError).send({ message: `Некорректный ID ${req.params.userId}.` });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: `Пользователь по id ${req.params.userId} не найден.` });
+        res.status(DocumentNotFoundError).send({ message: `Пользователь по ID ${req.params.userId} не найден.` });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
@@ -51,7 +51,7 @@ module.exports.editUserAvatar = (req, res) => {
       if (err instanceof mongoose.Error.ValidationError) {
         res.status(CastError).send({ message: err.message });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Пользователь по id не найден.' });
+        res.status(DocumentNotFoundError).send({ message: 'Пользователь по ID не найден.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
@@ -67,9 +67,9 @@ module.exports.editUserInfo = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        res.status(CastError).send({ message: 'Некорректный id.' });
+        res.status(CastError).send({ message: 'Некорректный ID.' });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Пользователь по id не найден.' });
+        res.status(DocumentNotFoundError).send({ message: 'Пользователь по ID не найден.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }

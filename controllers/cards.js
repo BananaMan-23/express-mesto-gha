@@ -13,7 +13,7 @@ module.exports.addCard = (req, res) => {
       Card.findById(card._id)
         .populate('owner')
         .then((data) => res.send(data))
-        .catch(() => res.status(DocumentNotFoundError).send({ message: 'Карточка по id не найдена.' }));
+        .catch(() => res.status(DocumentNotFoundError).send({ message: 'Карточка по ID не найдена.' }));
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -39,9 +39,9 @@ module.exports.deleteCard = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        res.status(CastError).send({ message: 'Некорректный id карточки.' });
+        res.status(CastError).send({ message: 'Некорректный ID карточки.' });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Карточка с указанным id не найдена.' });
+        res.status(DocumentNotFoundError).send({ message: 'Карточка с указанным ID не найдена.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
@@ -57,9 +57,9 @@ module.exports.likeCard = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        res.status(CastError).send({ message: 'Некорректный id карточки.' });
+        res.status(CastError).send({ message: 'Некорректный ID карточки.' });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Карточка с указанным id не найдена.' });
+        res.status(DocumentNotFoundError).send({ message: 'Карточка с указанным ID не найдена.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
@@ -75,9 +75,9 @@ module.exports.dislikeCard = (req, res) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        res.status(CastError).send({ message: 'Некорректный id карточки.' });
+        res.status(CastError).send({ message: 'Некорректный ID карточки.' });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res.status(DocumentNotFoundError).send({ message: 'Карточка с указанным id не найдена.' });
+        res.status(DocumentNotFoundError).send({ message: 'Карточка с указанным ID не найдена.' });
       } else {
         res.status(ServerError).send({ message: 'Произошла ошибка.' });
       }
