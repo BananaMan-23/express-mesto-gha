@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
-const app = express();
+// const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 });
+
+const app = express();
 
 app.use((req, res, next) => {
   req.user = {
